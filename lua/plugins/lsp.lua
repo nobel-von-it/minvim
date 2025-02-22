@@ -7,11 +7,11 @@ return {
         'hrsh7th/cmp-nvim-lsp',
     },
     config = function()
-        local capabilities = require('cmp_nvim_lsp').default_capabilities()
+        local capabilities = require 'cmp_nvim_lsp'.default_capabilities()
 
-        require('fidget').setup {}
+        require 'fidget'.setup {}
 
-        require('mason-lspconfig').setup {
+        require 'mason-lspconfig'.setup {
             ensure_installed = {
                 'lua_ls',
                 'rust_analyzer',
@@ -30,12 +30,12 @@ return {
             },
             handlers = {
                 function(server_name)
-                    require('lspconfig')[server_name].setup {
+                    require 'lspconfig'[server_name].setup {
                         capabilities = capabilities,
                         settings = {
-                            ["rust-analyzer"] = {
+                            ['rust-analyzer'] = {
                                 checkOnSave = {
-                                    command = "clippy"
+                                    command = 'clippy'
                                 }
                             }
                         }
@@ -46,10 +46,10 @@ return {
 
         vim.cmd [[autocmd BufWritePre * lua vim.lsp.buf.format()]]
 
-        for _, method in ipairs({
+        for _, method in ipairs {
             'textDocument/diagnostic',
             'workspace/diagnostic'
-        }) do
+        } do
             local default_diagnostic_handler = vim.lsp.handlers[method]
             vim.lsp.handlers[method] = function(err, result, context, config)
                 if err ~= nil and err.code == -32802 then

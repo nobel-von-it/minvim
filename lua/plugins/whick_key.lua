@@ -1,14 +1,14 @@
 return {
-    "folke/which-key.nvim",
-    event = "VeryLazy",
+    'folke/which-key.nvim',
+    event = 'VeryLazy',
     opts = {},
     keys = {
         {
-            "<leader>?",
+            '<leader>?',
             function()
-                require("which-key").show({ global = false })
+                require 'which-key'.show { global = false }
             end,
-            desc = "Buffer Local Keymaps (which-key)",
+            desc = 'Buffer Local Keymaps (which-key)',
         },
     },
 }

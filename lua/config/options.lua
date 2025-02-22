@@ -15,6 +15,6 @@ vim.opt.smartindent = true
 
 vim.opt.undofile = true
 
-vim.opt.signcolumn = "yes"
-vim.opt.colorcolumn = "80"
+vim.opt.signcolumn = 'yes'
+vim.opt.colorcolumn = '80'
 vim.opt.wrap = false
