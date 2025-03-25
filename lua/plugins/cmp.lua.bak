@@ -1,0 +1,53 @@
+-- nvim-cmp Configuration
+-- This script configures the nvim-cmp plugin for autocompletion in Neovim.
+
+return {
+    'hrsh7th/nvim-cmp', -- Main completion plugin.
+
+    -- Define plugin dependencies for nvim-cmp to extend its functionality.
+    dependencies = {
+        'hrsh7th/cmp-nvim-lsp', -- LSP-based completions.
+        'hrsh7th/cmp-buffer',   -- Buffer-based completions.
+        'hrsh7th/cmp-path',     -- Path-based completions for filesystem navigation.
+        'hrsh7th/cmp-cmdline',  -- Command-line completions.
+        'L3MON4D3/LuaSnip',     -- Snippet engine for code snippets support.
+    },
+
+    -- Configuration function for nvim-cmp.
+    config = function()
+        -- Import nvim-cmp and configure basic settings.
+        local cmp = require 'cmp'
+
+        -- Define selection behavior for navigation in the completion menu.
+        local select = { behavior = cmp.SelectBehavior.Select }
+
+        -- Setup nvim-cmp with the following options.
+        cmp.setup {
+            -- Snippet configuration.
+            snippet = {
+                -- Define how snippets should be expanded.
+                expand = function(args)
+                    require 'luasnip'.lsp_expand(args.body) -- Use LuaSnip for snippet expansion.
+                end,
+            },
+
+            -- Key mappings for completion menu navigation and actions.
+            mapping = cmp.mapping.preset.insert {
+                ['<C-p>'] = cmp.mapping.select_prev_item(select),  -- Ctrl + p to select previous item.
+                ['<C-n>'] = cmp.mapping.select_next_item(select),  -- Ctrl + n to select next item.
+                ['<C-y>'] = cmp.mapping.confirm { select = true }, -- Ctrl + y to confirm selection.
+                ['<CR>'] = cmp.mapping.confirm { select = true },  -- Enter to confirm selection.
+                ['<C-Space>'] = cmp.mapping.complete(),            -- Ctrl + Space to trigger completion menu.
+            },
+
+            -- Define completion sources in order of priority.
+            sources = cmp.config.sources {
+                { name = 'nvim_lsp' }, -- LSP-based completions (highest priority).
+                { name = 'codeium' },  -- AI-based code completions (optional, if installed).
+                { name = 'luasnip' },  -- Snippet completions.
+                { name = 'buffer' },   -- Buffer-based completions (suggest words from open files).
+                { name = 'path' },     -- Path-based completions for filesystem navigation.
+            }
+        }
+    end
+}

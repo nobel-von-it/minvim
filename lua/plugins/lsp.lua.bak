@@ -1,0 +1,114 @@
+return {
+    -- Plugin: nvim-lspconfig
+    'neovim/nvim-lspconfig',
+    -- Dependencies for LSP configuration and support
+    dependencies = {
+        { 'williamboman/mason.nvim', opts = {} }, -- Mason: For managing LSP servers
+        'williamboman/mason-lspconfig.nvim',      -- Integrates Mason with LSPConfig
+        'j-hui/fidget.nvim',                      -- Fidget: Displays LSP progress
+        'hrsh7th/cmp-nvim-lsp',                   -- nvim-cmp integration for LSP completion
+    },
+    config = function()
+        -- Define default capabilities for LSP servers using nvim-cmp
+        local capabilities = require 'cmp_nvim_lsp'.default_capabilities()
+
+        -- Set up the fidget plugin for showing LSP progress
+        require 'fidget'.setup {}
+
+        -- Set up Mason LSPconfig to manage and configure LSP servers
+        require 'mason-lspconfig'.setup {
+            -- Ensure the following LSP servers are installed and configured
+            ensure_installed = {
+                'lua_ls',        -- Lua Language Server
+                'rust_analyzer', -- Rust Language Server
+                'gopls',         -- Go Language Server
+                'erlangls',      -- Erlang Language Server
+                'clangd',        -- C/C++ Language Server
+                'ts_ls',         -- TypeScript/JavaScript Language Server
+                'html',          -- HTML Language Server
+                'cssls',         -- CSS Language Server
+                'jdtls',         -- Java Development Tools LSP
+                'graphql',       -- GraphQL LSP
+                'jsonls',        -- JSON Language Server
+                'pyright',       -- Python LSP
+                'yamlls',        -- YAML Language Server
+                'volar',         -- Vue.js Language Server
+            },
+            -- Custom handler for configuring LSP settings per server
+            handlers = {
+                function(server_name)
+                    -- Default settings for LSP servers
+                    local settings = {}
+
+                    -- Custom settings for Clangd server
+                    -- Custom settings for Rust Analyzer server
+                    if server_name == "rust_analyzer" then
+                        settings = {
+                            ['rust-analyzer'] = {
+                                checkOnSave = {
+                                    command = 'clippy' -- Use clippy for Rust code checking on save
+                                }
+                            }
+                        }
+                    end
+
+                    -- Set up the LSP server with the specified capabilities and settings
+                    require 'lspconfig'[server_name].setup {
+                        capabilities = capabilities,
+                        settings = settings
+                    }
+                end,
+            }
+        }
+
+        -- -- Automatically format code on file save
+        -- vim.cmd [[autocmd BufWritePre * lua vim.lsp.buf.format()]]
+
+        local map = function(keys, func, desc, mode)
+            mode = mode or 'n'
+            vim.keymap.set(mode, keys, func, { noremap = true, silent = true, desc = desc })
+        end
+
+        map('gd', require 'fzf-lua'.lsp_definitions, '[G]oto [D]efinition', 'n')
+        map('gD', vim.lsp.buf.declaration, '[G]oto [D]eclaration', 'n')
+        map('gr', require 'fzf-lua'.lsp_references, '[G]oto [R]eferences', 'n')
+        map('gI', require 'fzf-lua'.lsp_implementations, '[G]oto [I]mplementation', 'n')
+
+        map('<leader>D', require 'fzf-lua'.lsp_typedefs, '[G]oto [T]ype Definition', 'n')
+        map('<leader>ds', require 'fzf-lua'.lsp_document_symbols, 'Goto [D]ocument [S]ymbols', 'n')
+        map('<leader>ws', require 'fzf-lua'.lsp_live_workspace_symbols, 'Goto [W]orkspace [S]ymbols', 'n')
+
+        map('<leader>cr', vim.lsp.buf.rename, '[C]ode [R]ename', 'n')
+        map('<leader>ca', vim.lsp.buf.code_action, '[C]ode [A]ction', { 'n', 'x' })
+
+        -- Customize LSP diagnostic handling to ignore certain errors (like -32802)
+        for _, method in ipairs {
+            'textDocument/diagnostic',
+            'workspace/diagnostic'
+        } do
+            local default_diagnostic_handler = vim.lsp.handlers[method]
+            vim.lsp.handlers[method] = function(err, result, context, config)
+                -- Ignore error code -32802
+                -- Try to get arond the error if file is empty
+                -- but it's seems that it doesn't work
+                if err ~= nil and err.code == -32802 then
+                    return
+                end
+                -- Call the default handler for other diagnostics
+                return default_diagnostic_handler(err, result, context, config)
+            end
+        end
+
+        -- Configure diagnostic display for better user experience
+        vim.diagnostic.config {
+            float = {
+                focusable = false,  -- Diagnostic window is not focusable
+                style = 'minimal',  -- Use minimal style for diagnostics
+                border = 'rounded', -- Rounded borders for diagnostic windows
+                source = 'always',  -- Always show the source of the diagnostic
+                header = '',        -- No header in the diagnostic window
+                prefix = '',        -- No prefix in the diagnostic window
+            }
+        }
+    end
+}
