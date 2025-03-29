@@ -24,4 +24,4 @@
 --         ├── treesitter_textobjects.lua
 --         ├── trouble.lua
 --         └── whick_key.lua
-require 'config.lazy'
+require("config.lazy")
