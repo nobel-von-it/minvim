@@ -30,6 +30,12 @@ vim.opt.rtp:prepend(lazypath)
 vim.g.mapleader = ' '      -- Use space as the leader key for easier keybindings.
 vim.g.maplocalleader = ' ' -- Use space as the local leader key.
 
+vim.g.have_nerd_font = false
+
+vim.schedule(function()
+    vim.opt.clipboard = 'unnamedplus'
+end)
+
 -- Load custom options from the configuration file.
 require 'config.options'
 
