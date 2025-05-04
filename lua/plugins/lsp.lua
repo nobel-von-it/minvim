@@ -11,7 +11,7 @@ return {
 		"WhoIsSethDaniel/mason-tool-installer.nvim",
 
 		-- Useful status updates for LSP.
-		{ "j-hui/fidget.nvim", opts = {} },
+		{ "j-hui/fidget.nvim",       opts = {} },
 
 		-- -- Allows extra capabilities provided by nvim-cmp
 		-- "hrsh7th/cmp-nvim-lsp",
@@ -275,13 +275,13 @@ return {
 		-- for you, so that they are available from within Neovim.
 		local ensure_installed = vim.tbl_keys(servers or {})
 		vim.list_extend(ensure_installed, {
-			"stylua", -- Used to format Lua code
-			"black", -- Used to format Python code
-			"isort", -- Used to format Python code
-			"prettierd", -- Used to format JavaScript code
-			"prettier", -- Used to format JavaScript code
+			-- "stylua", -- Used to format Lua code
+			-- "black", -- Used to format Python code
+			-- "isort", -- Used to format Python code
+			-- "prettierd", -- Used to format JavaScript code
+			-- "prettier", -- Used to format JavaScript code
 			"rustfmt", -- Used to format Rust code
-			"gofumpt", -- Used to format Go code
+			-- "gofumpt", -- Used to format Go code
 			"clang-format",
 		})
 		require("mason-tool-installer").setup({ ensure_installed = ensure_installed })

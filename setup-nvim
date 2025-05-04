@@ -1,0 +1,34 @@
+#!/bin/bash
+
+DEFAULT_PATH="$HOME/Downloads/Git/minvim/"
+LINK_PATH="$DEFAULT_PATH"
+
+NVIM_PATH="$HOME/.config/nvim"
+
+if [[ -d "$NVIM_PATH" ]]
+then
+    # Update by default
+    echo "Deleting old version..."
+    rm -rf "$NVIM_PATH"
+fi
+
+if [ -z "$1" ]
+then
+    echo "Do you want to use default path ($DEFAULT_PATH)? (y/n)"
+    read -r ans
+
+    if [[ ! "$ans" = "y" ]]
+    then
+        echo "Provide path to linking files"
+        echo "Example:"
+        echo "  ./setup-nvim $DEFAULT_PATH"
+    fi
+else
+    LINK_PATH="$1"
+fi
+
+echo "Linking config file..."
+
+ln -s "$LINK_PATH" "$NVIM_PATH"
+
+echo "Done!"
