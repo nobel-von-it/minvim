@@ -5,11 +5,11 @@
 -- To enable Codeium, add this plugin to your Neovim configuration and run `:Codeium Auth`.
 -- After this step, you can start coding and Codeium will provide intelligent suggestions.
 return {
-    'Exafunction/codeium.vim', -- Codeium plugin repository.
-    event = 'BufEnter',        -- Load the plugin when a buffer is entered for efficiency.
+	'Exafunction/codeium.vim', -- Codeium plugin repository.
+	event = 'BufEnter',        -- Load the plugin when a buffer is entered for efficiency.
 
-    -- Optional: Configuration function to customize Codeium settings.
-    -- For more details, refer to the documentation: https://github.com/Exafunction/codeium.vim
-    -- opts = {}
+	-- Optional: Configuration function to customize Codeium settings.
+	-- For more details, refer to the documentation: https://github.com/Exafunction/codeium.vim
+	-- opts = {}
 }
--- Fact: The Codeium Neovim version doesn't work in my setup (I don't test it in other devices).
+-- Fact: The Codeium Neovim version doesn't work in my setup (I don't test other devices).

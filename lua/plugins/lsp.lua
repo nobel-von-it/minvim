@@ -280,8 +280,11 @@ return {
 			-- "isort", -- Used to format Python code
 			-- "prettierd", -- Used to format JavaScript code
 			-- "prettier", -- Used to format JavaScript code
-			"rustfmt", -- Used to format Rust code
-			-- "gofumpt", -- Used to format Go code
+			--
+			-- Deprecated: rustfmt should now be installed via rustup.
+			-- "rustfmt", -- Used to format Rust code
+			--
+			"gofumpt", -- Used to format Go code
 			"clang-format",
 		})
 		require("mason-tool-installer").setup({ ensure_installed = ensure_installed })
