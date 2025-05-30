@@ -3,7 +3,14 @@
 DEFAULT_PATH="$HOME/Downloads/Git/minvim/"
 LINK_PATH="$DEFAULT_PATH"
 
-NVIM_PATH="$HOME/.config/nvim"
+CONFIG="$HOME/.config"
+NVIM_PATH="$CONFIG/nvim"
+
+if [[ ! -d "$CONFIG" ]]
+then
+    echo "$CONFIG not found. Creating"
+    mkdir -p "$CONFIG"
+fi
 
 if [[ -d "$NVIM_PATH" ]]
 then
@@ -12,10 +19,9 @@ then
     rm -rf "$NVIM_PATH"
 fi
 
-if [ -z "$1" ]
+if [[ -z "$1" ]]
 then
-    echo "Do you want to use default path ($DEFAULT_PATH)? (y/n)"
-    read -r ans
+    read -p "Do you want to use default path ($DEFAULT_PATH)? (y/n) " ans
 
     if [[ ! "$ans" = "y" ]]
     then
