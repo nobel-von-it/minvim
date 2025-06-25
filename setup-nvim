@@ -6,6 +6,33 @@ LINK_PATH="$DEFAULT_PATH"
 CONFIG="$HOME/.config"
 NVIM_PATH="$CONFIG/nvim"
 
+OS=$(uname -s)
+
+read -p "Do you want to install neovim? (y/n) " ans
+if [[ ! "$ans" = ^[yY]$ ]]
+then
+    case "$OS" in
+        *"Arch"*) 
+            yes | sudo pacman -Suy neovim unzip git
+            ;;
+        *"Fedora"*)
+            sudo dnf update -y && sudo dnf upgrade -y
+            sudo dnf install neovim unzip git -y
+            ;;
+        *"Ubuntu"*)
+            sudo apt-get update && sudo apt-get upgrade
+            sudo apt-get install neovim unzip git
+            echo "Change distro bro"
+            ;;
+        *) 
+            echo "Distro not supported"
+            exit 1
+            ;;
+    esac
+fi
+
+
+
 if [[ ! -d "$CONFIG" ]]
 then
     echo "$CONFIG not found. Creating"
@@ -23,7 +50,7 @@ if [[ -z "$1" ]]
 then
     read -p "Do you want to use default path ($DEFAULT_PATH)? (y/n) " ans
 
-    if [[ ! "$ans" = "y" ]]
+    if [[ ! "$ans" = ^[yY]$ ]]
     then
         echo "Provide path to linking files"
         echo "Example:"
