@@ -2,6 +2,7 @@
 -- That's what this script is for.
 -- This file is the entry point to the configuration.
 --
+-- Deprecated (old structure)
 -- Project structure, which shows which files and directories are contained in the project (eza -T):
 -- ├── init.lua
 -- └── lua
