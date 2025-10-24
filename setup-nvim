@@ -9,7 +9,7 @@ NVIM_PATH="$CONFIG/nvim"
 OS=$(uname -s)
 
 read -p "Do you want to install neovim? (y/n) " ans
-if [[ ! "$ans" = ^[yY]$ ]]
+if [[ "$ans" = "y" ]]
 then
     case "$OS" in
         *"Arch"*) 
