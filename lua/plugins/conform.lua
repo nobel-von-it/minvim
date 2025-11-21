@@ -24,7 +24,7 @@ return {
 		},
 		formatters = {
 			shfmt = {
-				prepend_args = { "-l", "-w" }
+				prepend_args = { "-l", "-w" },
 			},
 			-- tombi = {
 			-- 	prepend_args = { "format" }

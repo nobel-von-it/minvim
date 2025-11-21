@@ -1,5 +1,5 @@
 return {
-	'echasnovski/mini.statusline',
+	"echasnovski/mini.statusline",
 	version = false,
 	opts = {},
 }
