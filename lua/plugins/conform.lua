@@ -3,29 +3,37 @@ return {
 	opts = {
 		formatters_by_ft = {
 			lua = { "stylua" },
-			-- Conform will run multiple formatters sequentially
 			python = { "ruff" },
-			-- You can customize some of the format options for the filetype (:help conform.format)
-			rust = { "rustfmt", lsp_format = "fallback" },
-			-- Conform will run the first available formatter
+			rust = { "rustfmt" },
 
-			javascript = { "prettierd", "prettier", stop_after_first = true },
-			typescirpt = { "prettierd", "prettier", stop_after_first = true },
-			html = { "prettierd", "prettier", stop_after_first = true },
-			css = { "prettierd", "prettier", stop_after_first = true },
-			scss = { "prettierd", "prettier", stop_after_first = true },
-			json = { "prettierd", "prettier", stop_after_first = true },
-			yaml = { "prettierd", "prettier", stop_after_first = true },
-			markdown = { "prettierd", "prettier", stop_after_first = true },
+			sh = { "shfmt" },
+			toml = { "tombi" },
+
+			javascript = { "prettierd", "prettier" },
+			typescirpt = { "prettierd", "prettier" },
+			html = { "prettierd", "prettier" },
+			css = { "prettierd", "prettier" },
+			scss = { "prettierd", "prettier" },
+			json = { "prettierd", "prettier" },
+			yaml = { "prettierd", "prettier" },
+			markdown = { "prettierd", "prettier" },
 
 			c = { "clang-format" },
 			cpp = { "clang-format" },
 			go = { "gofumpt" },
 		},
+		formatters = {
+			shfmt = {
+				prepend_args = { "-l", "-w" }
+			},
+			-- tombi = {
+			-- 	prepend_args = { "format" }
+			-- }
+		},
 		format_on_save = {
-			-- These options will be passed to conform.format()
 			timeout_ms = 500,
 			lsp_format = "fallback",
+			stop_after_first = true,
 		},
 	},
 }
