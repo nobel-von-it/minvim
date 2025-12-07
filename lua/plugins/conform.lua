@@ -10,6 +10,8 @@ return {
 			toml = { "tombi" },
 
 			json = { "jq" },
+			js = { "js_beautify" },
+			html = { "html_beautify" },
 
 			c = { "clang-format" },
 			cpp = { "clang-format" },
@@ -21,7 +23,7 @@ return {
 			},
 		},
 		format_on_save = {
-			timeout_ms = 500,
+			timeout_ms = 1500,
 			lsp_format = "fallback",
 		},
 	},
