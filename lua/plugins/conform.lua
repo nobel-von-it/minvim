@@ -11,7 +11,7 @@ return {
 			rust = { "rustfmt" },
 
 			sh = { "shfmt" },
-			toml = { "tombi" },
+			toml = { "taplo" },
 
 			json = { "jq" },
 			js = { "js_beautify" },
