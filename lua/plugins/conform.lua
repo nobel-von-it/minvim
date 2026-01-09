@@ -20,6 +20,8 @@ return {
 			c = { "clang-format" },
 			cpp = { "clang-format" },
 			go = { "gofumpt" },
+
+			typst = { "prettypst" },
 		},
 		formatters = {
 			shfmt = {
