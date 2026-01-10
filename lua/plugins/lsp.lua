@@ -29,6 +29,23 @@ return {
 				map("<leader>cr", vim.lsp.buf.rename, "[C]ode [R]ename")
 				map("<leader>ca", vim.lsp.buf.code_action, "[C]ode [A]ction", { "n", "x" })
 
+				if vim.bo[event.buf].filetype == "markdown" then
+					map("<leader>x", function()
+						local line = vim.api.nvim_get_current_line()
+						local new_line
+
+						if line:find("%- %[ %]") then
+							new_line = (line:gsub("%- %[ %]", "- [x]", 1))
+						else
+							new_line = (line:gsub("%- %[x%]", "- [ ]", 1))
+						end
+
+						if new_line then
+							vim.api.nvim_set_current_line(new_line)
+						end
+					end, "Toggle Checkbox")
+				end
+
 				local function client_supports_method(client, method, bufnr)
 					if vim.fn.has("nvim-0.11") == 1 then
 						return client:supports_method(method, bufnr)
@@ -129,6 +146,17 @@ return {
 						},
 					},
 				},
+			},
+			marksman = {
+				root_dir = function(fname)
+					local base_path = os.getenv("MO_BASE_PATH")
+					if base_path and base_path ~= "" then
+						return base_path
+					end
+					return require("lspconfig.util").root_pattern(".git", ".marksman.toml", "index.md", "Home.md")(
+						fname
+					)
+				end,
 			},
 		}
 		local ensure_installed = vim.tbl_keys(servers or {})
