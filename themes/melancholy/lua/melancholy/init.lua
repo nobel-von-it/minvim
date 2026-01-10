@@ -103,6 +103,40 @@ M.setup = function()
 		TelescopePromptBorder = { fg = c.blue },
 		TelescopePromptTitle = { fg = c.blue },
 		TelescopePromptPrefix = { fg = c.green },
+
+		-- == RENDER-MARKDOWN (Общие) ==
+		RenderMarkdownBullet = { fg = c.yellow },
+		RenderMarkdownCode = { bg = c.dark_grey },
+		RenderMarkdownCodeInline = { bg = c.dark_grey, fg = c.cyan },
+		RenderMarkdownTableHead = { fg = c.blue, bold = true },
+		RenderMarkdownTableRow = { fg = c.fg },
+		RenderMarkdownTableFill = { fg = c.dark_grey },
+		RenderMarkdownSuccess = { fg = c.green },
+		RenderMarkdownInfo = { fg = c.blue },
+		RenderMarkdownWarn = { fg = c.yellow },
+		RenderMarkdownError = { fg = c.red },
+
+		-- == ЗАГОЛОВКИ (Headings) ==
+		-- Используем акценты палитры для уровней заголовков
+		RenderMarkdownH1 = { fg = c.blue, bg = c.blue, bold = true },
+		RenderMarkdownH1Bg = { bg = "#252b37", fg = c.blue, bold = true }, -- Чуть светлее базы для выделения
+		RenderMarkdownH2 = { fg = c.magenta, bold = true },
+		RenderMarkdownH2Bg = { bg = "#2b2537", fg = c.magenta, bold = true },
+		RenderMarkdownH3 = { fg = c.cyan, bold = true },
+		RenderMarkdownH4 = { fg = c.green, bold = true },
+		RenderMarkdownH5 = { fg = c.yellow, bold = true },
+		RenderMarkdownH6 = { fg = c.red, bold = true },
+
+		-- == ЧЕКБОКСЫ (Checkboxes) ==
+		RenderMarkdownTodo = { fg = c.yellow }, -- [ ]
+		RenderMarkdownChecked = { fg = c.green }, -- [x]
+		RenderMarkdownUnchecked = { fg = c.grey }, -- [ ] (пустой)
+
+		-- == CALLOUTS (Obsidian style) ==
+		-- Настройка блоков > [!INFO] и прочих
+		["@markup.quote.markdown_inline"] = { fg = c.grey },
+		RenderMarkdownCallout = { fg = c.blue },
+		Conceal = { fg = c.grey },
 	}
 
 	-- 3. ПРИМЕНЕНИЕ
