@@ -1,4 +1,4 @@
-vim.keymap.set("n", "<leader>e", vim.cmd.Explore, { desc = "Open vim Explorer" })
+-- vim.keymap.set("n", "<leader>e", vim.cmd.Explore, { desc = "Open vim Explorer" })
 vim.keymap.set("i", "jk", "<ESC>", { desc = "Remap escape to jk", silent = true, noremap = true })
 vim.keymap.set(
 	"n",
