@@ -137,6 +137,19 @@ M.setup = function()
 		["@markup.quote.markdown_inline"] = { fg = c.grey },
 		RenderMarkdownCallout = { fg = c.blue },
 		Conceal = { fg = c.grey },
+
+		-- Рамка и фон для плавающего окна команд
+		NoiceCmdlinePopup = { bg = c.bg },
+		NoiceCmdlinePopupBorder = { fg = c.blue }, -- Синяя рамка (под цвет твоих функций)
+		NoiceCmdlineIcon = { fg = c.blue },
+
+		-- Для поиска через /
+		NoiceCmdlinePopupBorderSearch = { fg = c.yellow },
+		NoiceCmdlineIconSearch = { fg = c.yellow },
+
+		-- Меню подсказок при наборе команды
+		NoicePopupmenuSelected = { bg = c.selection, bold = true },
+		NoicePopupmenuBorder = { fg = c.dark_grey },
 	}
 
 	-- 3. ПРИМЕНЕНИЕ
