@@ -7,6 +7,11 @@ return {
 		"WhoIsSethDaniel/mason-tool-installer.nvim",
 
 		{ "j-hui/fidget.nvim", opts = {} },
+		{
+			"mrcjkb/rustaceanvim",
+			version = "^6",
+			lazy = false,
+		},
 	},
 	config = function()
 		vim.api.nvim_create_autocmd("LspAttach", {
@@ -44,6 +49,24 @@ return {
 							vim.api.nvim_set_current_line(new_line)
 						end
 					end, "Toggle Checkbox")
+				end
+
+				if vim.bo[event.buf].filetype == "rust" then
+					map("<leader>ca", function()
+						vim.cmd.RustLsp("codeAction")
+					end, "Code Action (Rust)")
+					map("K", function()
+						vim.cmd.RustLsp({ "hover", "actions" })
+					end, "Hover Actions")
+					map("<leader>rr", function()
+						vim.cmd.RustLsp("runnables")
+					end, "Runnables")
+					map("<leader>ee", function()
+						vim.cmd.RustLsp("expandMacro")
+					end, "Expand Macro")
+					map("<leader>rd", function()
+						vim.cmd.RustLsp("debuggables")
+					end, "Debuggables")
 				end
 
 				local function client_supports_method(client, method, bufnr)
@@ -122,19 +145,25 @@ return {
 		})
 		local original_capabilities = vim.lsp.protocol.make_client_capabilities()
 		local capabilities = require("blink.cmp").get_lsp_capabilities(original_capabilities)
-		local servers = {
-			clangd = {},
-			gopls = {},
-			basedpyright = {},
-			rust_analyzer = {
-				settings = {
+
+		vim.g.rustaceanvim = {
+			server = {
+				capabilities = capabilities,
+				default_settings = {
 					["rust-analyzer"] = {
 						checkOnSave = {
 							command = "clippy",
+							extraArgs = { "--all-features", "--all-targets" },
 						},
 					},
 				},
 			},
+		}
+
+		local servers = {
+			clangd = {},
+			gopls = {},
+			basedpyright = {},
 			cssls = {},
 			html = {},
 			ts_ls = {},
