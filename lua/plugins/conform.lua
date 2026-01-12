@@ -23,13 +23,8 @@ return {
 
 			typst = { "prettypst" },
 		},
-		formatters = {
-			shfmt = {
-				prepend_args = { "-l", "-w" },
-			},
-		},
 		format_on_save = {
-			timeout_ms = 1500,
+			timeout_ms = 500,
 			lsp_format = "fallback",
 		},
 	},
