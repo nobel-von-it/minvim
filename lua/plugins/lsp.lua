@@ -11,6 +11,31 @@ return {
 			"mrcjkb/rustaceanvim",
 			version = "^6",
 			lazy = false,
+			init = function()
+				-- Нам нужно получить capabilities от blink.cmp
+				-- Так как это init, require может быть рискованным, но обычно blink уже доступен в путях
+				local success, blink = pcall(require, "blink.cmp")
+				local capabilities = success and blink.get_lsp_capabilities()
+					or vim.lsp.protocol.make_client_capabilities()
+
+				vim.g.rustaceanvim = {
+					server = {
+						capabilities = capabilities, -- Передаем возможности (включая автодополнение)
+						default_settings = {
+							["rust-analyzer"] = {
+								checkOnSave = {
+									command = "clippy",
+									-- extraArgs = { "--all-features", "--all-targets" },
+								},
+								-- Можно форсировать диагностику, если она все равно не появляется
+								diagnostics = {
+									enable = true,
+								},
+							},
+						},
+					},
+				}
+			end,
 		},
 	},
 	config = function()
@@ -146,20 +171,6 @@ return {
 		local original_capabilities = vim.lsp.protocol.make_client_capabilities()
 		local capabilities = require("blink.cmp").get_lsp_capabilities(original_capabilities)
 
-		vim.g.rustaceanvim = {
-			server = {
-				capabilities = capabilities,
-				default_settings = {
-					["rust-analyzer"] = {
-						checkOnSave = {
-							command = "clippy",
-							extraArgs = { "--all-features", "--all-targets" },
-						},
-					},
-				},
-			},
-		}
-
 		local servers = {
 			clangd = {},
 			gopls = {},
@@ -200,6 +211,8 @@ return {
 					server.capabilities = vim.tbl_deep_extend("force", {}, capabilities, server.capabilities or {})
 					require("lspconfig")[server_name].setup(server)
 				end,
+
+				["rust-analyzer"] = function() end,
 			},
 		})
 	end,
