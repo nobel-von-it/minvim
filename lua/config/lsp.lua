@@ -109,4 +109,8 @@ vim.lsp.enable({
 	"rust_analyzer",
 	"marksman",
 	"basedpyright",
+	"html_ls",
+	"css_ls",
+	"ts_ls",
+	"gopls",
 })
