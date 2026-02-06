@@ -6,19 +6,6 @@ vim.api.nvim_create_autocmd("LspAttach", {
 			vim.keymap.set(mode, keys, func, { buffer = event.buf, desc = "LSP: " .. desc })
 		end
 
-		local fzf = require("fzf-lua")
-		map("gd", fzf.lsp_definitions, "[G]oto [D]efinition")
-		map("gD", vim.lsp.buf.declaration, "[G]oto [D]eclaration")
-		map("gr", fzf.lsp_references, "[G]oto [R]eferences")
-		map("gI", fzf.lsp_implementations, "[G]oto [I]mplementation")
-
-		map("<leader>D", fzf.lsp_typedefs, "[G]oto [T]ype Definition")
-		map("<leader>ds", fzf.lsp_document_symbols, "Goto [D]ocument [S]ymbols")
-		map("<leader>ws", fzf.lsp_live_workspace_symbols, "Goto [W]orkspace [S]ymbols")
-
-		map("<leader>cr", vim.lsp.buf.rename, "[C]ode [R]ename")
-		map("<leader>ca", vim.lsp.buf.code_action, "[C]ode [A]ction", { "n", "x" })
-
 		if vim.bo[event.buf].filetype == "markdown" then
 			map("<leader>x", function()
 				local line = vim.api.nvim_get_current_line()
@@ -34,6 +21,19 @@ vim.api.nvim_create_autocmd("LspAttach", {
 					vim.api.nvim_set_current_line(new_line)
 				end
 			end, "Toggle Checkbox")
+		else
+			local fzf = require("fzf-lua")
+			map("gd", fzf.lsp_definitions, "[G]oto [D]efinition")
+			map("gD", vim.lsp.buf.declaration, "[G]oto [D]eclaration")
+			map("gr", fzf.lsp_references, "[G]oto [R]eferences")
+			map("gI", fzf.lsp_implementations, "[G]oto [I]mplementation")
+
+			map("<leader>D", fzf.lsp_typedefs, "[G]oto [T]ype Definition")
+			map("<leader>ds", fzf.lsp_document_symbols, "Goto [D]ocument [S]ymbols")
+			map("<leader>ws", fzf.lsp_live_workspace_symbols, "Goto [W]orkspace [S]ymbols")
+
+			map("<leader>cr", vim.lsp.buf.rename, "[C]ode [R]ename")
+			map("<leader>ca", vim.lsp.buf.code_action, "[C]ode [A]ction", { "n", "x" })
 		end
 
 		local function client_supports_method(client, method, bufnr)
