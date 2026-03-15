@@ -6,7 +6,7 @@ return {
 		"saghen/blink.cmp",
 		"WhoIsSethDaniel/mason-tool-installer.nvim",
 
-		{ "j-hui/fidget.nvim", opts = {} },
+		{ "j-hui/fidget.nvim",       opts = {} },
 	},
 	config = function()
 		vim.api.nvim_create_autocmd("LspAttach", {
@@ -126,15 +126,15 @@ return {
 			clangd = {},
 			gopls = {},
 			basedpyright = {},
-			rust_analyzer = {
-				settings = {
-					["rust-analyzer"] = {
-						checkOnSave = {
-							command = "clippy",
-						},
-					},
-				},
-			},
+			-- rust_analyzer = {
+			-- 	settings = {
+			-- 		["rust-analyzer"] = {
+			-- 			checkOnSave = {
+			-- 				command = "clippy",
+			-- 			},
+			-- 		},
+			-- 	},
+			-- },
 			cssls = {},
 			html = {},
 			ts_ls = {},
