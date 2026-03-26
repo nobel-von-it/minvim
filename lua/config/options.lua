@@ -14,6 +14,7 @@ vim.opt.softtabstop = 4
 vim.opt.smarttab = true
 vim.opt.smartindent = true
 
+vim.opt.autochdir = true
 vim.opt.undofile = true
 
 vim.opt.wrap = false
