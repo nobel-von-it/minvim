@@ -20,3 +20,11 @@ vim.opt.wrap = false
 
 vim.opt.list = true
 vim.opt.listchars = { tab = "» ", trail = "·", nbsp = "␣" }
+
+vim.opt.clipboard = "unnamedplus"
+
+if vim.g.neovide then
+	vim.keymap.set('v', '<C-v>', '"+P')
+	vim.keymap.set('i', '<C-v>', '<C-r>+')
+	vim.keymap.set('c', '<C-v>', '<C-r>+')
+end
