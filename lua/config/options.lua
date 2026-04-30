@@ -1,10 +1,7 @@
 vim.opt.number = true
 vim.opt.relativenumber = true
-
 vim.opt.cursorline = true
-
 vim.opt.timeoutlen = 200
-
 vim.opt.scrolloff = 12
 
 vim.opt.expandtab = true
@@ -14,15 +11,22 @@ vim.opt.softtabstop = 4
 vim.opt.smarttab = true
 vim.opt.smartindent = true
 
-vim.opt.autochdir = true
+-- Disabling autochdir as it breaks relative paths in Quickfix
+vim.opt.autochdir = false
 vim.opt.undofile = true
-
 vim.opt.wrap = false
 
 vim.opt.list = true
 vim.opt.listchars = { tab = "» ", trail = "·", nbsp = "␣" }
 
 vim.opt.clipboard = "unnamedplus"
+
+-- Classic Completion Settings
+vim.opt.completeopt = { "menu", "menuone", "noselect" }
+vim.opt.shortmess:append("c") -- Don't pass messages to |ins-completion-menu|.
+
+-- Tags
+vim.opt.tags = "./.tags;,.tags;" -- Search for .tags in current dir, then parent, etc.
 
 if vim.g.neovide then
 	vim.keymap.set('v', '<C-v>', '"+P')
