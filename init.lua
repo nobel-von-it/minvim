@@ -30,7 +30,10 @@ local function bootstrap()
 		["oil.nvim"]        = "https://github.com/stevearc/oil.nvim",
 		["nvim-dap"]        = "https://github.com/mfussenegger/nvim-dap",
 		["gitsigns.nvim"]   = "https://github.com/lewis6991/gitsigns.nvim",
-        ["tmux-navigator"]  = "https://github.com/alexghergh/nvim-tmux-navigation"
+        ["tmux-navigator"]  = "https://github.com/alexghergh/nvim-tmux-navigation",
+		["plenary.nvim"]    = "https://github.com/nvim-lua/plenary.nvim",
+		["diffview.nvim"]   = "https://github.com/sindrets/diffview.nvim",
+		["neogit"]          = "https://github.com/NeogitOrg/neogit",
 	}
 
 	local cloned = false
@@ -101,8 +104,12 @@ safe_setup("oil", {
 	keymaps = {
 		["-"] = "actions.parent",
 	},
+	view_options = {
+		show_hidden = true,
+	},
 })
 safe_setup("gitsigns")
+safe_setup("neogit")
 
 -- Tmux Navigation
 local ok_tmux, ntn = pcall(require, "nvim-tmux-navigation")

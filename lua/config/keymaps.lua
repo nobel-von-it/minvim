@@ -30,6 +30,13 @@ map("n", "<leader>q", "<cmd>copen<CR>", { desc = "Open Quickfix" })
 -- Run/Make
 map("n", "<leader>r", "<cmd>Make<CR>", { desc = "Run/Make (Dispatch)" })
 
+-- Format
+map("n", "<leader>f", function()
+	if vim.bo.filetype == "rust" then
+		vim.cmd("!cargo fmt")
+	end
+end, { desc = "Format File" })
+
 -- Oil (File Explorer)
 map("n", "<leader>e", function()
 	local ok, oil = pcall(require, "oil")
@@ -43,6 +50,9 @@ end, { desc = "Toggle Oil" })
 
 -- Open Oil with '-' (standard)
 map("n", "-", "<cmd>Oil<CR>", { desc = "Open Oil" })
+
+-- Git
+map("n", "<leader>g", "<cmd>Neogit<CR>", { desc = "Git Status (Neogit)" })
 
 -- Better Window Navigation
 map("n", "<C-h>", "<C-w>h")
