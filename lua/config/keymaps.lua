@@ -4,23 +4,20 @@ local map = vim.keymap.set
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 
+-- Quick Escape
+map("i", "jk", "<Esc>", { desc = "Escape Insert Mode" })
+
 -- Files & Navigation
 map("n", "<leader><leader>", require("fzf-lua").files, { desc = "Find Files" })
 map("n", "<leader>b", require("fzf-lua").buffers, { desc = "Buffers" })
 map("n", "<leader>fg", require("fzf-lua").live_grep, { desc = "Live Grep" })
 
--- Smart Move "gd"
--- 1. Try tags
--- 2. If fail, grep for word under cursor
-local function smart_gd()
-	local success, _ = pcall(vim.cmd, "tag " .. vim.fn.expand("<cword>"))
-	if not success then
-		print("Tag not found, grepping...")
-		require("fzf-lua").grep_cword()
-	end
+-- Fallback "gd" (when LSP is not attached)
+local function fallback_gd()
+	require("fzf-lua").grep_cword()
 end
 
-map("n", "gd", smart_gd, { desc = "Smart Go to Definition" })
+map("n", "gd", fallback_gd, { desc = "Fallback Go to Definition (Grep)" })
 
 -- Quickfix Navigation
 map("n", "]q", "<cmd>cnext<CR>zz", { desc = "Next Quickfix" })

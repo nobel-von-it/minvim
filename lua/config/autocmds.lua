@@ -1,18 +1,18 @@
 local au = vim.api.nvim_create_autocmd
 local group = vim.api.nvim_create_augroup("MinVimUser", { clear = true })
 
--- Auto-generate tags on save (background)
-au("BufWritePost", {
-	group = group,
-	pattern = "*",
-	callback = function()
-		local project_root = vim.fn.finddir(".git", ".;")
-		if project_root ~= "" then
-			-- Using .tags to avoid clutter
-			vim.fn.jobstart({ "ctags", "-f", ".tags", "-R", "." }, { detach = true })
-		end
-	end,
-})
+-- Auto-generate tags on save (disabled in favor of LSP)
+-- au("BufWritePost", {
+-- 	group = group,
+-- 	pattern = "*",
+-- 	callback = function()
+-- 		local project_root = vim.fn.finddir(".git", ".;")
+-- 		if project_root ~= "" then
+-- 			-- Using .tags to avoid clutter
+-- 			vim.fn.jobstart({ "ctags", "-f", ".tags", "-R", "." }, { detach = true })
+-- 		end
+-- 	end,
+-- })
 
 -- Compiler Settings (makeprg & errorformat)
 au("FileType", {

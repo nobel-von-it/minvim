@@ -25,8 +25,8 @@ vim.opt.clipboard = "unnamedplus"
 vim.opt.completeopt = { "menu", "menuone", "noselect" }
 vim.opt.shortmess:append("c") -- Don't pass messages to |ins-completion-menu|.
 
--- Tags
-vim.opt.tags = "./.tags;,.tags;" -- Search for .tags in current dir, then parent, etc.
+-- Tags (disabled in favor of LSP)
+-- vim.opt.tags = "./.tags;,.tags;" -- Search for .tags in current dir, then parent, etc.
 
 if vim.g.neovide then
 	vim.keymap.set('v', '<C-v>', '"+P')

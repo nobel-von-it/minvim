@@ -34,6 +34,8 @@ local function bootstrap()
 		["plenary.nvim"]    = "https://github.com/nvim-lua/plenary.nvim",
 		["diffview.nvim"]   = "https://github.com/sindrets/diffview.nvim",
 		["neogit"]          = "https://github.com/NeogitOrg/neogit",
+		["nvim-lspconfig"]  = "https://github.com/neovim/nvim-lspconfig",
+		["supermaven-nvim"] = "https://github.com/supermaven-inc/supermaven-nvim",
 	}
 
 	local cloned = false
@@ -61,6 +63,8 @@ require("config.options")
 require("config.keymaps")
 require("config.autocmds")
 pcall(require, "config.dap") -- New DAP config
+pcall(require, "config.lsp") -- LSP config
+pcall(require, "config.supermaven") -- AI completion config
 
 -- Load Melancholy Theme
 pcall(vim.cmd, "colorscheme melancholy")
@@ -100,6 +104,16 @@ safe_setup("mini.statusline", {
 safe_setup("mini.pairs")
 safe_setup("mini.surround")
 safe_setup("mini.icons")
+
+-- Autocomplete setup via mini.completion
+safe_setup("mini.completion", {
+	window = {
+		info = { border = "rounded" },
+		signature = { border = "rounded" },
+	},
+})
+
+
 safe_setup("oil", {
 	keymaps = {
 		["-"] = "actions.parent",
@@ -144,7 +158,7 @@ end
 local ok_ts, ts = pcall(require, "nvim-treesitter.configs")
 if ok_ts then
 	ts.setup({
-		ensure_installed = { "lua", "rust", "cpp", "python", "javascript", "c" },
+		ensure_installed = { "lua", "rust", "cpp", "python", "javascript", "c", "go", "nix" },
 		highlight = { enable = true },
 	})
 end
