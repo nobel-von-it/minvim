@@ -158,7 +158,7 @@ end
 local ok_ts, ts = pcall(require, "nvim-treesitter.configs")
 if ok_ts then
 	ts.setup({
-		ensure_installed = { "lua", "rust", "cpp", "python", "javascript", "c", "go", "nix" },
+		ensure_installed = { "lua", "rust", "cpp", "python", "javascript", "typescript", "tsx", "json", "css", "c", "go", "nix" },
 		highlight = { enable = true },
 	})
 end

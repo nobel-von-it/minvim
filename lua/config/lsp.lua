@@ -315,6 +315,28 @@ vim.api.nvim_create_autocmd("LspAttach", {
 				prompt_implement_interface(struct_name, struct_line)
 			end, "Implement Interface (Go)")
 		end
+
+		-- TypeScript / Obsidian Plugin specific mappings
+		if client.name == "ts_ls" or client.name == "vtsls" then
+			map("n", "<leader>co", function()
+				vim.lsp.buf.code_action({
+					context = { only = { "source.organizeImports.ts" }, diagnostics = {} },
+					apply = true,
+				})
+			end, "Organize Imports (TS/Obsidian)")
+			map("n", "<leader>ci", function()
+				vim.lsp.buf.code_action({
+					context = { only = { "source.addMissingImports.ts" }, diagnostics = {} },
+					apply = true,
+				})
+			end, "Add Missing Imports (Obsidian API)")
+			map("n", "<leader>cf", function()
+				vim.lsp.buf.code_action({
+					context = { only = { "source.fixAll.ts" }, diagnostics = {} },
+					apply = true,
+				})
+			end, "Fix All (TS)")
+		end
 	end,
 })
 
@@ -420,3 +442,103 @@ vim.api.nvim_create_autocmd("BufWritePre", {
 		vim.lsp.buf.format({ async = false })
 	end,
 })
+
+-- Configure ts_ls (TypeScript / JavaScript / Obsidian Plugin Development)
+vim.lsp.config("ts_ls", {
+	filetypes = { "javascript", "javascriptreact", "javascript.jsx", "typescript", "typescriptreact", "typescript.tsx" },
+	root_markers = { "tsconfig.json", "manifest.json", "package.json", "jsconfig.json", ".git" },
+	settings = {
+		typescript = {
+			inlayHints = {
+				includeInlayParameterNameHints = "all",
+				includeInlayParameterNameHintsWhenArgumentMatchesName = false,
+				includeInlayFunctionParameterTypeHints = true,
+				includeInlayVariableTypeHints = true,
+				includeInlayPropertyDeclarationTypeHints = true,
+				includeInlayFunctionLikeReturnTypeHints = true,
+				includeInlayEnumMemberValueHints = true,
+			},
+			suggest = {
+				completeFunctionCalls = true,
+			},
+			preferences = {
+				importModuleSpecifierPreference = "non-relative",
+			},
+		},
+		javascript = {
+			inlayHints = {
+				includeInlayParameterNameHints = "all",
+				includeInlayFunctionParameterTypeHints = true,
+				includeInlayVariableTypeHints = true,
+				includeInlayPropertyDeclarationTypeHints = true,
+				includeInlayFunctionLikeReturnTypeHints = true,
+			},
+			suggest = {
+				completeFunctionCalls = true,
+			},
+		},
+	},
+})
+vim.lsp.enable("ts_ls")
+
+-- Configure eslint (ESLint linter and diagnostics)
+vim.lsp.config("eslint", {
+	settings = {
+		workingDirectories = { mode = "auto" },
+	},
+})
+vim.lsp.enable("eslint")
+
+-- Configure jsonls (For Obsidian manifest.json, package.json, tsconfig.json)
+vim.lsp.config("jsonls", {
+	filetypes = { "json", "jsonc" },
+	settings = {
+		json = {
+			validate = { enable = true },
+		},
+	},
+})
+vim.lsp.enable("jsonls")
+
+-- Configure cssls (For Obsidian plugin styles.css)
+vim.lsp.config("cssls", {
+	settings = {
+		css = { validate = true },
+		less = { validate = true },
+		scss = { validate = true },
+	},
+})
+vim.lsp.enable("cssls")
+
+-- Auto-format and organize imports on save for TypeScript/JavaScript (Obsidian plugin files)
+vim.api.nvim_create_autocmd("BufWritePre", {
+	group = lsp_fmt_group,
+	pattern = { "*.ts", "*.tsx", "*.js", "*.jsx" },
+	callback = function()
+		-- Organize imports
+		local params = vim.lsp.util.make_range_params()
+		params.context = { only = { "source.organizeImports" } }
+		local result = vim.lsp.buf_request_sync(0, "textDocument/codeAction", params, 1000)
+		for _, res in pairs(result or {}) do
+			for _, r in pairs(res.result or {}) do
+				if r.edit then
+					vim.lsp.util.apply_workspace_edit(r.edit, "utf-8")
+				elseif r.command then
+					vim.lsp.buf.execute_command(r.command)
+				end
+			end
+		end
+		-- Format
+		vim.lsp.buf.format({ async = false })
+	end,
+})
+
+-- Auto-format on save for JSON and CSS (Obsidian manifest.json and styles.css)
+vim.api.nvim_create_autocmd("BufWritePre", {
+	group = lsp_fmt_group,
+	pattern = { "*.json", "*.css" },
+	callback = function()
+		vim.lsp.buf.format({ async = false })
+	end,
+})
+
