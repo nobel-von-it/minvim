@@ -56,3 +56,20 @@ map("n", "<C-h>", "<C-w>h")
 map("n", "<C-j>", "<C-w>j")
 map("n", "<C-k>", "<C-w>k")
 map("n", "<C-l>", "<C-w>l")
+
+-- Completion Navigation & Selection (mini.completion)
+map("i", "<Tab>", [[pumvisible() ? "\<C-n>" : "\<Tab>"]], { expr = true, desc = "Next completion item / Tab" })
+map("i", "<S-Tab>", [[pumvisible() ? "\<C-p>" : "\<S-Tab>"]], { expr = true, desc = "Prev completion item / Shift-Tab" })
+map("i", "<CR>", function()
+	if vim.fn.pumvisible() ~= 0 then
+		local item_selected = vim.fn.complete_info()["selected"] ~= -1
+		if item_selected then
+			return "\25" -- <C-y>
+		end
+	end
+	if _G.MiniPairs ~= nil then
+		return _G.MiniPairs.cr()
+	end
+	return "\r"
+end, { expr = true, desc = "Confirm completion / Enter" })
+

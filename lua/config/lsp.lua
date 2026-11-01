@@ -542,3 +542,37 @@ vim.api.nvim_create_autocmd("BufWritePre", {
 	end,
 })
 
+-- Configure lua_ls (Lua Language Server)
+vim.lsp.config("lua_ls", {
+	settings = {
+		Lua = {
+			runtime = {
+				version = "LuaJIT",
+			},
+			diagnostics = {
+				globals = { "vim" },
+			},
+			workspace = {
+				checkThirdParty = false,
+			},
+			completion = {
+				callSnippet = "Replace",
+			},
+			telemetry = {
+				enable = false,
+			},
+		},
+	},
+})
+vim.lsp.enable("lua_ls")
+
+-- Auto-format on save for Lua files
+vim.api.nvim_create_autocmd("BufWritePre", {
+	group = lsp_fmt_group,
+	pattern = "*.lua",
+	callback = function()
+		vim.lsp.buf.format({ async = false })
+	end,
+})
+
+

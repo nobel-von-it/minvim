@@ -36,6 +36,7 @@ local function bootstrap()
 		["neogit"]          = "https://github.com/NeogitOrg/neogit",
 		["nvim-lspconfig"]  = "https://github.com/neovim/nvim-lspconfig",
 		["supermaven-nvim"] = "https://github.com/supermaven-inc/supermaven-nvim",
+		["lazydev.nvim"]    = "https://github.com/folke/lazydev.nvim",
 	}
 
 	local cloned = false
@@ -59,6 +60,21 @@ bootstrap()
 -- ==                         CORE CONFIGURATION                           == --
 -- ========================================================================== --
 
+-- Helper to safely setup plugins
+local function safe_setup(module, opts)
+	local ok, m = pcall(require, module)
+	if ok then
+		m.setup(opts or {})
+	end
+end
+
+-- Lazydev setup (must be configured before LSP for Neovim Lua API autocompletion)
+safe_setup("lazydev", {
+	library = {
+		{ path = "${3rd}/luv/library", words = { "vim%.uv" } },
+	},
+})
+
 require("config.options")
 require("config.keymaps")
 require("config.autocmds")
@@ -68,14 +84,6 @@ pcall(require, "config.supermaven") -- AI completion config
 
 -- Load Melancholy Theme
 pcall(vim.cmd, "colorscheme melancholy")
-
--- Helper to safely setup plugins
-local function safe_setup(module, opts)
-	local ok, m = pcall(require, module)
-	if ok then
-		m.setup(opts or {})
-	end
-end
 
 -- Plugin Setup (Minimalist)
 safe_setup("mini.statusline", {

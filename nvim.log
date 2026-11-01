@@ -1,0 +1,10 @@
+WRN 2026-10-31T14:17:06.020 ?.31       socket_watcher_start:185: Failed to remove stale socket /run/user/1000/nvim.31.0: no such file or directory
+WRN 2026-10-31T14:17:06.020 ?.31       server_start:197: Failed to start server: no such file or directory: /run/user/1000/
+ERR 2026-10-31T14:17:06.095 ?.31       vim_mktempdir:3361: tempdir root has invalid permissions (40777): /tmp/nvim.nimirus
+WRN 2026-10-31T14:17:06.096 ?.31       socket_watcher_start:185: Failed to remove stale socket /run/user/1000/fzf-lua.1793431026.31.1: no such file or directory
+WRN 2026-10-31T14:17:06.096 ?.31       server_start:197: Failed to start server: no such file or directory: /run/user/1000/
+WRN 2026-10-31T14:17:53.312 ?.31       server_start:197: Failed to start server: read-only file system: /tmp/nvim_test/nvim.31.0
+WRN 2026-10-31T14:18:01.942 ?.28       socket_watcher_start:185: Failed to remove stale socket /run/user/1000/nvim.28.0: no such file or directory
+WRN 2026-10-31T14:18:01.942 ?.28       server_start:197: Failed to start server: no such file or directory: /run/user/1000/
+WRN 2026-10-31T14:20:15.698 ?.31       socket_watcher_start:185: Failed to remove stale socket /run/user/1000/nvim.31.0: no such file or directory
+WRN 2026-10-31T14:20:15.698 ?.31       server_start:197: Failed to start server: no such file or directory: /run/user/1000/
