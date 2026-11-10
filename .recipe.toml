@@ -1,0 +1,6 @@
+[package]
+target = "nvim"
+
+[hooks]
+pre_link = ["git submodule update --init --recursive"]
+post_link = ["nvim --headless +qa"]
